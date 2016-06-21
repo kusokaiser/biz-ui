@@ -110,7 +110,29 @@ define(function(require) {
                 });
             }
         },
-
+        
+         /*
+         * 更新底部按钮
+         */
+        updateButton: function (options) {
+            var bottom = this.$container.find('.biz-dialog-bottom');
+            if (options.buttons.length) {
+                bottom.empty();
+                $.each(options.buttons, function(index, button) {
+                    $('<button>' + button.text + '</button>')
+                        .bizButton({
+                            theme: button.theme
+                        })
+                        .click(function(e) {
+                            button.click.call(self, e);
+                        })
+                        .appendTo(bottom);
+                });
+            } else {
+                bottom.remove();
+            }
+        },
+        
         /**
          * 打开
          */
