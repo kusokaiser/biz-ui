@@ -78,22 +78,7 @@ define(function(require) {
                     self.close();
                 });
             this.$container.find('.biz-dialog-content').append(this.$main);
-
-            var bottom = this.$container.find('.biz-dialog-bottom');
-            if (options.buttons.length) {
-                $.each(options.buttons, function(index, button) {
-                    $('<button>' + button.text + '</button>')
-                        .bizButton({
-                            theme: button.theme
-                        })
-                        .click(function(e) {
-                            button.click.call(self, e);
-                        })
-                        .appendTo(bottom);
-                });
-            } else {
-                bottom.remove();
-            }
+            this.updateButton(options);
 
             //把dialog加入到body中，并且设置top和left
             //加入mask
