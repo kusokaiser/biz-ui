@@ -131,8 +131,8 @@ define(function(require) {
                 if (options.foot === 'bottom') {
                     this.$tableBody.find('tbody').append(this.createFoot(options));
                 }
-            } else if (options.noDataContent) { //无数据提示行
-                this.createNoDataContent();
+            }  else if (options.onLoadingContent) { //初始化时，先显示loading内容
+                this.createOnLoadingContent();
             }
 
             //同步宽度
@@ -390,6 +390,23 @@ define(function(require) {
                 colspan = colspan + 1;
             }
             this.$tableBody.find('tbody').append('<tr class="no-data"><td colspan="' + colspan + '">' + this.options.noDataContent + '</td></tr>');
+        },
+        
+        /**
+         * 创建loading样式，数据返回后会消失
+         * @protected
+         */
+        createOnLoadingContent: function() {
+            var colspan = this.options.column.length;
+            $.each(this.options.column, function(index, val) {
+                if (typeof val.visible !== 'undefined' && !val.visible) {
+                    colspan = colspan - 1;
+                }
+            });
+            if (this.options.selectable) {
+                colspan = colspan + 1;
+            }
+            this.$tableBody.find('tbody').append('<tr class="no-data"><td colspan="' + colspan + '">' + this.options.onLoadingContent + '</td></tr>');
         },
 
         /**
